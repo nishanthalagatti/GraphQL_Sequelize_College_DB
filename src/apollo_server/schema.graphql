@@ -1,0 +1,83 @@
+type Query {
+  getStudents: [Student!]!
+  getStudent(studentId: Int!): Student
+  getInstructors: [Instructor!]!
+  getInstructor(instructorId: Int!): Instructor
+  getCourses: [Course!]!
+  getCourse(courseId: Int!): Course
+  getTakes: [Takes!]!
+  getTake(studentId: Int!, courseId: Int!): Takes
+}
+
+type Mutation {
+  addStudent(
+    firstName: String!
+    lastName: String!
+    city: String!
+    address: String!
+    state: String!
+  ): Student
+  addInstructor(name: String!, department: String!, rank: String!): Instructor
+  addCourse(title: String!, courseHours: Int!, instructorId: Int!): Course
+  addTake(studentId: Int!, courseId: Int!, grade: String!): Takes
+  updateStudent(
+    studentId: Int!
+    firstName: String
+    lastName: String
+    city: String
+    address: String
+    state: String
+  ): Student
+  updateInstructor(
+    instructorId: Int!
+    name: String
+    department: String
+    rank: String
+  ): Instructor
+  updateCourse(
+    courseId: Int!
+    title: String
+    courseHours: Int
+    instructorId: Int
+  ): Course
+  updateTake(studentId: Int!, courseId: Int!, grade: String): Takes
+  deleteStudent(studentId: Int!): Student
+  deleteInstructor(instructorId: Int!): Instructor
+  deleteCourse(courseId: Int!): Course
+  deleteTake(studentId: Int!, courseId: Int!): Takes
+}
+
+type Student {
+  studentId: ID!
+  firstName: String!
+  lastName: String!
+  address: String!
+  city: String!
+  state: String!
+  takesCourse: [Takes!]!
+}
+
+type Course {
+  courseId: ID!
+  title: String!
+  courseHours: Int!
+  hasStudents: [Takes!]!
+  instructor: Instructor!
+  instructorId: Int!
+}
+
+type Instructor {
+  instructorId: ID!
+  name: String!
+  department: String!
+  rank: String!
+  teaches: [Course!]!
+}
+
+type Takes {
+  student: Student!
+  course: Course!
+  studentId: ID!
+  courseId: ID!
+  grade: String!
+}
